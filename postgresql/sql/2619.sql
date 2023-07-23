@@ -1,7 +1,7 @@
 --- URI Online Judge SQL
 --- Copyright URI Online Judge
 --- www.urionlinejudge.com.br
---- Problem 2618
+--- Problem 2619
 
 CREATE TABLE providers (
   id numeric PRIMARY KEY,
@@ -25,14 +25,15 @@ CREATE TABLE products (
   id_categories numeric REFERENCES categories (id)
 );
 
+
 INSERT INTO providers (id, name, street, city, state)
 VALUES
   (1,	'Ajax SA',	'Rua Presidente Castelo Branco',	'Porto Alegre',	'RS'),
   (2,	'Sansul SA',	'Av Brasil',	'Rio de Janeiro',	'RJ'),
   (3,	'South Chairs',	'Rua do Moinho',	'Santa Maria',	'RS'),
   (4,	'Elon Electro',	'Rua Apolo',	'São Paulo',	'SP'),
-  (5,	'Mike Electro',	'Rua Pedro da Cunha',	'Curitiba',	'PR');
-
+  (5,	'Mike electro',	'Rua Pedro da Cunha',	'Curitiba',	'PR');
+  
 INSERT INTO categories (id, name)
 VALUES
   (1,	'Super Luxury'),
@@ -41,7 +42,7 @@ VALUES
   (4,	'Vintage'),
   (5,	'Supreme');
   
-INSERT INTO products (id, name, amount, price, id_providers, id_categories)
+INSERT INTO products ( id, name, amount, price, id_providers, id_categories)
 VALUES
   (1,	'Blue Chair',	30,	300.00,	5,	5),
   (2,	'Red Chair',	50,	2150.00,	2,	1),
@@ -53,4 +54,4 @@ VALUES
 /*  Execute this query to drop the tables */
 -- DROP TABLE products, categories, providers; --
 
-SELECT p.name, pr.name, c.name FROM products AS p INNER JOIN providers AS pr ON p.id_providers = pr.id AND pr.name = 'Sansul SA' INNER JOIN categories AS c ON p.id_categories = c.id AND c.name = 'Imported';
+SELECT pd.name, pv.name, pd.price FROM products AS pd INNER JOIN providers AS pv ON pd.id_providers = pv.id INNER JOIN categories AS c ON pd.id_categories = c.id WHERE pd.price > 1000 AND c.name = 'Super Luxury';
