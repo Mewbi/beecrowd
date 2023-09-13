@@ -14,7 +14,7 @@ My [profile](https://www.beecrowd.com.br/judge/pt/profile/394946)
 
 I have some personal objectives in this website:
 
-- <img width="20" height="20" src="assets/golang.svg"> Complete 50 problems using Golang
+- ~~<img width="20" height="20" src="assets/golang.svg"> Complete 50 problems using Golang~~
 - <img width="20" height="20" src="assets/golang.svg"> Complete 100 problems using Golang
 - <img width="20" height="20" src="assets/lua.png"> Complete 50 problems using Lua 5.4
 - <img width="20" height="20" src="assets/lua.png"> Complete 100 problems using Lua 5.4
