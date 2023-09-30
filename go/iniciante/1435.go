@@ -1,54 +1,52 @@
 package main
 
-import "fmt"
-
-func printMatrix(n int) {
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			x := i + 1
-			y := j + 1
-
-			if x > n/2 {
-				x = n - x + 1
-			}
-
-			if y > n/2 {
-				y = n - y + 1
-			}
-
-			v := x
-			if v > y {
-				v = y
-			}
-
-			whiteSpace := 4
-			if j == 0 {
-				whiteSpace = 3
-			}
-
-			whiteSpace -= ((v / 10) + 1)
-			var output string
-			for k := 0; k < whiteSpace; k++ {
-				output += fmt.Sprintf(" ")
-			}
-			output += fmt.Sprintf("%d", v)
-			fmt.Printf(output)
-		}
-		fmt.Println()
-	}
-	fmt.Println()
-}
+import (
+	"fmt"
+)
 
 func main() {
-	var n int
-
 	for {
-		fmt.Scanf("%d", &n)
-
-		if n == 0 {
+		var N int
+		_, err := fmt.Scanf("%d", &N)
+		if err != nil || N == 0 {
 			break
+		} else {
+			j := 1
+			p := 0
+			q := 0
+			r := 0
+			i := N
+			if N%2 == 0 {
+				r = N / 2
+			} else if N%2 == 1 {
+				r = (N / 2) + 1
+			}
+			ara := make([][]int, N)
+			for i := range ara {
+				ara[i] = make([]int, N)
+			}
+			for c := 1; c <= r; c++ {
+				for a := p; a < i; a++ {
+					for b := q; b < i; b++ {
+						ara[a][b] = j
+					}
+				}
+				j++
+				p++
+				q++
+				i--
+			}
+			for g := 0; g < N; g++ {
+				for h := 0; h < N; h++ {
+					if h == 0 {
+						fmt.Printf("%3d", ara[g][h])
+					} else {
+						fmt.Printf(" %3d", ara[g][h])
+					}
+				}
+				fmt.Printf("\n")
+			}
+			fmt.Printf("\n")
 		}
-
-		printMatrix(n)
 	}
 }

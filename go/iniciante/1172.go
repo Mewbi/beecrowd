@@ -1,21 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 func main() {
-	var arr []int
-	var x int
+	scanner := bufio.NewScanner(os.Stdin)
+	x := make([]int, 10)
+	y := 0
 
 	for i := 0; i < 10; i++ {
-		fmt.Scanf("%d", &x)
-		if x <= 0 {
-			x = 1
+		scanner.Scan()
+		fmt.Sscanf(scanner.Text(), "%d", &x[i])
+
+		if x[i] > 0 {
+			fmt.Printf("X[%d] = %d\n", y, x[i])
+		} else {
+			fmt.Printf("X[%d] = 1\n", y)
 		}
-
-		arr = append(arr, x)
-	}
-
-	for i, v := range arr {
-		fmt.Printf("X[%d] = %d\n", i, v)
+		y++
 	}
 }

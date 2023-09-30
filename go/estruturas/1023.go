@@ -1,54 +1,76 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
 	"sort"
+	"strconv"
+	"strings"
 )
 
 func main() {
-	var n, cityN, x, y int
-	var totC, totP float64
+	scanner := bufio.NewScanner(os.Stdin)
+	T := 0
 
-	var cons [][]int
+	for scanner.Scan() {
+		N, _ := strconv.Atoi(scanner.Text())
 
-	for {
-		fmt.Scanf("%d", &n)
-
-		if n == 0 {
+		if N == 0 {
 			break
 		}
 
-		cityN += 1
-		cons = [][]int{}
-		totP = 0
-		totC = 0
-
-		for i := 0; i < n; i++ {
-			fmt.Scanf("%d %d", &x, &y)
-			cons = append(cons, []int{x, y, y / x})
-			totP += float64(x)
-			totC += float64(y)
-		}
-
-		sort.Slice(cons, func(i, j int) bool {
-			return cons[i][2] < cons[j][2]
-		})
-
-		if cityN > 1 {
+		if T > 0 {
 			fmt.Println()
 		}
 
-		fmt.Printf("Cidade# %d:\n", cityN)
-		var output string
-		for i, v := range cons {
-			output += fmt.Sprintf("%d-%d", v[0], v[2])
+		totalX, totalY := 0.0, 0.0
+		consumos := make(map[int]int)
 
-			if i < len(cons)-1 {
-				output += fmt.Sprintf(" ")
+		for i := 0; i < N; i++ {
+			scanner.Scan()
+			line := scanner.Text()
+			values := splitToIntegers(line)
+
+			X, Y := values[0], values[1]
+			totalX += float64(X)
+			totalY += float64(Y)
+
+			if _, ok := consumos[Y/X]; ok {
+				consumos[Y/X] += X
+			} else {
+				consumos[Y/X] = X
 			}
 		}
-		fmt.Println(output)
-		fmt.Printf("Consumo medio: %.2f m3.\n", math.Trunc(totC*100/totP)/100)
+
+		T++
+
+		fmt.Printf("Cidade# %d:\n", T)
+
+		var keys []int
+		for key := range consumos {
+			keys = append(keys, key)
+		}
+		sort.Ints(keys)
+
+		var output []string
+		for _, key := range keys {
+			output = append(output, fmt.Sprintf("%d-%d", consumos[key], key))
+		}
+
+		fmt.Println(strings.Join(output, " "))
+
+		fmt.Printf("Consumo medio: %.2f m3.\n", math.Trunc(totalY*100/totalX)/100)
 	}
+}
+
+func splitToIntegers(s string) []int {
+	var result []int
+	values := strings.Fields(s)
+	for _, v := range values {
+		num, _ := strconv.Atoi(v)
+		result = append(result, num)
+	}
+	return result
 }
